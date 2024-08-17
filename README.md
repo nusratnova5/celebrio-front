@@ -1,8 +1,42 @@
-# React + Vite
+# tech-hub-front
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Live Demo
 
-Currently, two official plugins are available:
+[Click Here](https://tech-hub-front-pearl.vercel.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Please login again if any problem while browsing the demo website.
+
+## 1. Clone
+
+First clone the repository
+```bash
+git clone https://github.com/nusratnova5/tech-hub-front.git
+```
+
+## 2. Navigate to the Project Directory
+
+Navigate to the Project Directory
+```bash
+cd tech-hub-front
+```
+
+## 3. Install Dependencies
+
+Install the project dependencies using npm:
+```bash
+npm install
+```
+
+## 4. Set Up Environment Variables
+
+Create a .env file in the root of your project directory and add the necessary environment variables. Here is an example of what it might look like:
+```bash
+VITE_API_URL=your_node_server_url
+```
+
+## 5. Run the Project
+
+Start the server:
+```bash
+npm run dev
+```
