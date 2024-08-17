@@ -16,25 +16,19 @@ const SingleEvents = ({ propEvent, setEvents, allEvents }) => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const token = localStorage.getItem('token');        
-                    const config = {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
-                    };
-                    const response = await axios.delete(`${import.meta.env.VITE_API_URL}/Events/${propProduct._id}`, config);
-                    console.log('Product deleted successfully:', response);
-                    if (response.data.acknowledged) {
+                    const response = await axios.delete(`${import.meta.env.VITE_API_URL}/api/events/${propEvent.id}`);
+                    console.log('Event deleted successfully:', response);
+                    if (response.success) {
                         Swal.fire({
-                            text: "Product deleted successfully.",
+                            text: "Event deleted successfully.",
                             icon: "success"
                         });
-                        const remainingProduct = allEvents.filter(singleProduct => singleProduct._id != propProduct._id);
-                        setEvents(remainingProduct);
+                        const remainingEvent = allEvents.filter(singleEvent => singleEvent.id != propEvent.id);
+                        setEvents(remainingEvent);
                     }
 
                 } catch (error) {
-                    console.error('Error deleting product:', error.response ? error.response.data : error.message);
+                    console.error('Error deleting Event:', error.response ? error.response.data : error.message);
                 }
 
             }
@@ -46,18 +40,17 @@ const SingleEvents = ({ propEvent, setEvents, allEvents }) => {
                 <div className="flex items-center gap-3">
                     <div className="avatar">
                         <div className="mask mask-squircle w-12 h-12">
-                            <img src={propProduct?.imageUrl} alt="Avatar Tailwind CSS Component" />
+                            <img src={propEvent?.imageUrl} alt="Avatar Tailwind CSS Component" />
                         </div>
                     </div>
                 </div>
             </td>
-            <td>{propProduct?.title}</td>
-            <td>{propProduct?.brand}</td>
-            <th>{propProduct?.price}</th>
-            <th>{propProduct?.status == 1 ? 'Not sold' : 'Sold'}</th>
+            <td>{propEvent?.name}</td>
+            <td>{propEvent?.category}</td>
+            <th>{propEvent?.date}</th>
             <td>
                 <button onClick={handleDelete} className="btn btn-sm btn-error rounded-none  text-white mr-2">Delete</button>
-                <Link to={`/dashboard/edit-product/${propProduct._id}`} className="btn btn-sm px-5 rounded-none bg-accent text-white mr-2">Edit</Link>
+                <Link to={`/dashboard/edit-Event/${propEvent.id}`} className="btn btn-sm px-5 rounded-none bg-accent text-white mr-2">Edit</Link>
             </td>
         </tr>
 

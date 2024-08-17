@@ -44,17 +44,7 @@ export const router = createBrowserRouter([
                 element: <EditEvent/>,
                 loader: (async ({ params }) => {
                     try {
-                        // Retrieve token from localStorage
-                        const token = localStorage.getItem('token');
-
-                        // Create headers object with Authorization header containing the token
-                        const headers = {
-                            Authorization: `Bearer ${token}`
-                        };
-
-                        // Make GET request to fetch Events with headers containing the token
-                        const response = await axios.get(`${import.meta.env.VITE_API_URL}/Events/${params.id}`, { headers });
-
+                        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/events/${params.id}`);
                         return response.data; // Return the fetched Events
                     } catch (error) {
                         console.error('Error fetching Events:', error);

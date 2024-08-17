@@ -6,25 +6,23 @@ import { auth } from '../../Firebase/Firebase.config';
 
 const AddEvents = () => {
     const [user] = useAuthState(auth);
-    const addProduct = (e) => {
+    const addEvents = (e) => {
         e.preventDefault();
         const form = e.target;
-        const id = form.id.value;
         const title = form.title.value;
-        const brand = form.brand.value;
-        const price = form.price.value;
+        const category = form.category.value;
+        const date = form.date.value;
         const description = form.description.value;
         const imageUrl = form.imageUrl.value;
+        const location = form.location.value;
 
         const requestBody = {
             title: title,
-            brand: brand,
-            price: price,
+            category: category,
+            date: date,
             description: description,
             imageUrl: imageUrl,
-            sellerEmail: user?.email,
-            status: 1,
-            buyerEmail: null,
+            location: location,
         }
 
         Swal.fire({
@@ -38,18 +36,11 @@ const AddEvents = () => {
         }).then(async (result)  =>  {
             if (result.isConfirmed) {
                 try {
-                    const token = localStorage.getItem('token');        
-                    const config = {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
-                    };
-
-                    const response = await axios.post(`${import.meta.env.VITE_API_URL}/Events`, requestBody, config);
-                    console.log('Product created successfully:', response);
+                    const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/events`, requestBody);
+                    console.log('Event created successfully:', response);
                     if (response.data.acknowledged) {
                         Swal.fire({
-                            text: "Product added successfully.",
+                            text: "Event added successfully.",
                             icon: "success"
                         });
                     }
@@ -63,8 +54,8 @@ const AddEvents = () => {
     }
     return (
         <div className=''>
-            <h2 className='text-3xl text-accent font-bold mb-8 uppercase tracking-widest'>Add a new product</h2>
-            <form onSubmit={addProduct}>
+            <h2 className='text-3xl text-accent font-bold mb-8 uppercase tracking-widest'>Add a new Event</h2>
+            <form onSubmit={addEvents}>
                 <label className="form-control w-full mb-3">
                     <div className="label">
                         <span className="label-text font-bold">Title</span>
@@ -73,15 +64,15 @@ const AddEvents = () => {
                 </label>
                 <label className="form-control w-full mb-3">
                     <div className="label">
-                        <span className="label-text font-bold">Brand</span>
+                        <span className="label-text font-bold">category</span>
                     </div>
-                    <input type="text" name='brand' placeholder="Brand" className="input input-bordered w-full rounded-none" />
+                    <input type="text" name='category' placeholder="category" className="input input-bordered w-full rounded-none" />
                 </label>
                 <label className="form-control w-full mb-3">
                     <div className="label">
-                        <span className="label-text font-bold">Price</span>
+                        <span className="label-text font-bold">date</span>
                     </div>
-                    <input type="text" name='price' placeholder="Price" className="input input-bordered w-full rounded-none" />
+                    <input type="text" name='date' placeholder="date" className="input input-bordered w-full rounded-none" />
                 </label>
                 <label className="form-control w-full mb-3">
                     <div className="label">
@@ -94,6 +85,12 @@ const AddEvents = () => {
                         <span className="label-text font-bold">Image Url</span>
                     </div>
                     <input type="text" name='imageUrl' placeholder="Image Url" className="input input-bordered w-full rounded-none" />
+                </label>
+                <label className="form-control w-full mb-3">
+                    <div className="label">
+                        <span className="label-text font-bold">Location</span>
+                    </div>
+                    <textarea type="text" name='location' placeholder="Image Url" className="input input-bordered w-full rounded-none" />
                 </label>
 
                 <div>
