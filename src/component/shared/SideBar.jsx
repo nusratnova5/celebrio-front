@@ -11,7 +11,7 @@ const SideBar = ({ isOpenSidebar, toggleSidebar }) => {
                     <li>
                         <div className="flex-1">
                             <Link to={'/'} className="btn btn-ghost text-xl pl-0">Celebrio</Link>
-                        </div>
+                        </div>  
                     </li>
                     <li><NavLink onClick={toggleSidebar} to={'/'}>Calendar</NavLink></li>
                     <li><NavLink onClick={toggleSidebar} to={'/events'}>Events</NavLink></li>

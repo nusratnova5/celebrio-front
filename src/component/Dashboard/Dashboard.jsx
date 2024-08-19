@@ -32,10 +32,10 @@ const Dashboard = () => {
 
     useEffect(() => {
         if (showEditModal) {
-            document.getElementById(modalId).showModal();           
+            document.getElementById(modalId).showModal();
         }
         if (showViewModal) {
-            document.getElementById(modalId).showModal();           
+            document.getElementById(modalId).showModal();
         }
     }, [showEditModal, showViewModal])
 
@@ -99,17 +99,17 @@ const Dashboard = () => {
     const handleDateClick = (date) => {
         document.getElementById('addModal').showModal();
     };
-        
+
 
     return (
         <div>
-                            <div className='flex justify-end mb-3'>
-                    <select onChange={(e) => setCategory(e.target.value)} className="select select-bordered w-full max-w-xs">
-                        <option value=''>Select Category</option>
-                        <option>Personal</option>
-                        <option>Work</option>
-                    </select>
-                </div>
+            <div className='flex justify-end mb-3'>
+                <select onChange={(e) => setCategory(e.target.value)} className="select select-bordered w-full lg:w-80">
+                    <option value=''>Select Category</option>
+                    <option>Personal</option>
+                    <option>Work</option>
+                </select>
+            </div>
             <Calendar
                 localizer={localizer}
                 events={events}

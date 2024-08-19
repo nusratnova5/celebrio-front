@@ -72,7 +72,7 @@ const AllEvents = () => {
         <div>
             <div>
                 <div className='flex justify-end mb-3'>
-                    <select onChange={(e) => setCategory(e.target.value)} className="select select-bordered w-full max-w-xs">
+                    <select onChange={(e) => setCategory(e.target.value)} className="select select-bordered w-full lg:w-80">
                         <option value=''>Select Category</option>
                         <option>Personal</option>
                         <option>Work</option>
