@@ -3,6 +3,7 @@ import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Swal from 'sweetalert2';
 import { auth } from '../../Firebase/Firebase.config';
+import { addEvent } from '../../indexedDB';
 
 const AddEvents = () => {
     const [user] = useAuthState(auth);
@@ -11,7 +12,8 @@ const AddEvents = () => {
         const form = e.target;
         const title = form.title.value;
         const category = form.category.value;
-        const date = form.date.value;
+        const start = form.start.value;
+        const end = form.end.value;
         const description = form.description.value;
         const imageUrl = form.imageUrl.value;
         const location = form.location.value;
@@ -19,7 +21,8 @@ const AddEvents = () => {
         const requestBody = {
             title: title,
             category: category,
-            date: date,
+            start: start,
+            end: end,
             description: description,
             imageUrl: imageUrl,
             location: location,
@@ -36,9 +39,10 @@ const AddEvents = () => {
         }).then(async (result)  =>  {
             if (result.isConfirmed) {
                 try {
-                    const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/events`, requestBody);
+                    // const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/events`, requestBody);
+                    const response = await addEvent(requestBody);
                     console.log('Event created successfully:', response);
-                    if (response.data.acknowledged) {
+                    if (response.acknowledged) {
                         Swal.fire({
                             text: "Event added successfully.",
                             icon: "success"
@@ -70,9 +74,15 @@ const AddEvents = () => {
                 </label>
                 <label className="form-control w-full mb-3">
                     <div className="label">
-                        <span className="label-text font-bold">date</span>
+                        <span className="label-text font-bold">Start Date & Time</span>
                     </div>
-                    <input type="text" name='date' placeholder="date" className="input input-bordered w-full rounded-none" />
+                    <input type="datetime-local" name='start' placeholder="date" className="input input-bordered w-full rounded-none" />
+                </label>
+                <label className="form-control w-full mb-3">
+                    <div className="label">
+                        <span className="label-text font-bold">End Date & Time</span>
+                    </div>
+                    <input type="datetime-local" name='end' placeholder="date" className="input input-bordered w-full rounded-none" />
                 </label>
                 <label className="form-control w-full mb-3">
                     <div className="label">

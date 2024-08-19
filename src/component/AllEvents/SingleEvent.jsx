@@ -2,8 +2,9 @@ import axios from 'axios';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { deleteEvent } from '../../indexedDB';
 
-const SingleEvents = ({ propEvent, setEvents, allEvents }) => {
+const SingleEvents = ({ propEvent, setEvents, allEvents, openEditModal }) => {
     const handleDelete = () => {
         Swal.fire({
             title: "Are you sure?",
@@ -16,9 +17,10 @@ const SingleEvents = ({ propEvent, setEvents, allEvents }) => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const response = await axios.delete(`${import.meta.env.VITE_API_URL}/api/events/${propEvent.id}`);
+                    // const response = await axios.delete(`${import.meta.env.VITE_API_URL}/api/events/${propEvent.id}`);
+                    const response = await deleteEvent(propEvent.id);
                     console.log('Event deleted successfully:', response);
-                    if (response.success) {
+                    if (response.acknowledged) {
                         Swal.fire({
                             text: "Event deleted successfully.",
                             icon: "success"
@@ -50,7 +52,9 @@ const SingleEvents = ({ propEvent, setEvents, allEvents }) => {
             <th>{propEvent?.date}</th>
             <td>
                 <button onClick={handleDelete} className="btn btn-sm btn-error rounded-none  text-white mr-2">Delete</button>
-                <Link to={`/dashboard/edit-Event/${propEvent.id}`} className="btn btn-sm px-5 rounded-none bg-accent text-white mr-2">Edit</Link>
+                {/* <Link to={`/edit-event/${propEvent.id}`} className="btn btn-sm px-5 rounded-none bg-accent text-white mr-2">Edit</Link> */}
+                <button type='button' onClick={() => openEditModal(propEvent, 'editModal')} className="btn btn-sm px-5 rounded-none bg-accent text-white mr-2">Edit</button>
+                <button type='button' onClick={() => openEditModal(propEvent, 'viewModal')} className="btn btn-sm px-5 rounded-none bg-accent text-white mr-2">View</button>
             </td>
         </tr>
 

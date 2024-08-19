@@ -1,27 +1,42 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLoaderData, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import {editEvent, getEventDetails} from '../../indexedDB'
 
 const EditEvent = () => {
-    const event = useLoaderData();
     const { id } = useParams(); // Get the Event ID from URL parameters
+    const [event, setEvent] = useState({});
 
-    const editEvent = (e) => {
+    useEffect(() => {
+        fetchEvent()
+    }, []);
+
+    const fetchEvent = async() => {
+        const response = await getEventDetails(id);
+        console.log(response);
+        setEvent(response)
+    }
+
+    const handleEditEvent = (e) => {
+        console.log(e.target);
         e.preventDefault();
 
         const form = e.target;
         const title = form.title.value;
         const category = form.category.value;
-        const date = form.date.value;
+        const start = form.start.value;
+        const end = form.end.value;
         const description = form.description.value;
         const imageUrl = form.imageUrl.value;
         const location = form.location.value;
 
         const requestBody = {
+            id,
             title: title,
             category: category,
-            date: date,
+            start: start,
+            end: end,
             description: description,
             imageUrl: imageUrl,
             location: location,
@@ -38,7 +53,8 @@ const EditEvent = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const response = await axios.put(`${import.meta.env.VITE_API_URL}/api/events/${id}`, requestBody);
+                    // const response = await axios.put(`${import.meta.env.VITE_API_URL}/api/events/${id}`, requestBody);
+                    const response = await editEvent(requestBody);
                     console.log('Event created successfully:', response);
                     if(response){
                           Swal.fire({
@@ -51,12 +67,11 @@ const EditEvent = () => {
                 }
             }
         });
-
     }
     return (
         <div className=''>
             <h2 className='text-3xl text-accent font-bold mb-8 uppercase tracking-widest'>Add a new Event</h2>
-            <form onSubmit={editEvent}>
+            <form onSubmit={handleEditEvent}>
                 <label className="form-control w-full mb-3">
                     <div className="label">
                         <span className="label-text font-bold">Title</span>
@@ -71,9 +86,15 @@ const EditEvent = () => {
                 </label>
                 <label className="form-control w-full mb-3">
                     <div className="label">
-                        <span className="label-text font-bold">date</span>
+                        <span className="label-text font-bold">Start Date & Time</span>
                     </div>
-                    <input type="text" name='date' defaultValue={event?.date} placeholder="date" className="input input-bordered w-full rounded-none" />
+                    <input type="datetime-local" name='start' defaultValue={event?.start} placeholder="date" className="input input-bordered w-full rounded-none" />
+                </label>
+                <label className="form-control w-full mb-3">
+                    <div className="label">
+                        <span className="label-text font-bold">End Date & Time</span>
+                    </div>
+                    <input type="datetime-local" name='end' defaultValue={event?.end} placeholder="date" className="input input-bordered w-full rounded-none" />
                 </label>
                 <label className="form-control w-full mb-3">
                     <div className="label">

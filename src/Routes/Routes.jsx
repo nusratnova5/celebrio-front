@@ -16,20 +16,7 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: "",
-                element: <Dashboard />,
-                loader: (async () => {
-                    try {
-                        const token = localStorage.getItem('token');
-                        const headers = {
-                            Authorization: `Bearer ${token}`
-                        };
-                        const response = await axios.get(`${import.meta.env.VITE_API_URL}/users/dashboard-data`, { headers });
-                        return response.data;
-                    } catch (error) {
-                        console.error('Error fetching Events:', error);
-                        throw error; // Rethrow the error to handle it outside
-                    }
-                })
+                element: <Dashboard />
             },
             {
                 path: "add-events",
@@ -42,15 +29,6 @@ export const router = createBrowserRouter([
             {
                 path: "edit-event/:id",
                 element: <EditEvent/>,
-                loader: (async ({ params }) => {
-                    try {
-                        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/events/${params.id}`);
-                        return response.data; // Return the fetched Events
-                    } catch (error) {
-                        console.error('Error fetching Events:', error);
-                        throw error; // Rethrow the error to handle it outside
-                    }
-                })
             }
         ]
     },
