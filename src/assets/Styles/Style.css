@@ -11,3 +11,12 @@
 body {
   font-family: "Work Sans", sans-serif;
 }
+
+.menu .active {
+  background-color: white !important;
+  color: #7e505f !important;
+}
+.menu a:active {
+  background-color: transparent !important;
+  color: #fff !important;
+}

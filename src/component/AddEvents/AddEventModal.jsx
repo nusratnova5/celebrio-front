@@ -58,9 +58,9 @@ const AddEventModal = ({ featchEvents }) => {
                         </label>
                         <label className="form-control w-full mb-3">
                             <div className="label">
-                                <span className="label-text font-bold">category</span>
+                                <span className="label-text font-bold">Category</span>
                             </div>
-                            <select name='category' className="select select-bordered w-full max-w-xs">
+                            <select name='category' className="select select-bordered w-full">
                                 <option>Personal</option>
                                 <option>Work</option>
                             </select>

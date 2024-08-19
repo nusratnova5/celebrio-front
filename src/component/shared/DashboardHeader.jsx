@@ -38,7 +38,7 @@ const DashboardHeader = ({ toggleSidebar }) => {
                     </div>
                 </div>
                 <div className="lg:hidden flex-1 p-4">
-                    <Link to={'/'} className="btn bg-transparent border-none shadow-none text-3xl text-sky-blue flex-nowrap">E-Therapists</Link>
+                    <Link to={'/'} className="btn bg-transparent border-none shadow-none text-3xl text-accent flex-nowrap">Celebrio</Link>
                 </div>
             </div>
             <div className="flex-none gap-2">

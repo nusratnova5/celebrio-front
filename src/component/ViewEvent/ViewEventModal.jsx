@@ -9,7 +9,7 @@ const ViewEventModal = ({ event, closeEditModal, openEditModal, fetchEvents }) =
         fetchEvent()
     }, [event]);
 
-    const fetchEvent = async() => {
+    const fetchEvent = async () => {
         const response = await getEventDetails(event.id);
         setNewEditEvent(response)
     }
@@ -48,62 +48,25 @@ const ViewEventModal = ({ event, closeEditModal, openEditModal, fetchEvents }) =
         <div>
             <dialog id="viewModal" className="modal">
                 <div className="modal-box">
-                    <div className='flex items-center justify-between'>
+                    <div className='flex items-center justify-between mb-3'>
                         <h3 class="font-bold text-lg">View Events</h3>
-                        <button type='button' onClick={() => closeEditModal('viewModal')} class="btn btn-sm btn-circle btn-ghost">✕</button>
+                        <div className='flex gap-2'>
+                            <button type='button' onClick={() => openEditModal(event, 'editModal')} className='btn p-2 bg-green-400 hover:bg-green-500 text-white'>Edit</button>
+                            <button type='button' onClick={handleDelete} className='btn p-2 bg-red-400 hover:bg-red-500 text-white'>Delete</button>
+                            <button type='button' onClick={() => closeEditModal('viewModal')} class="btn btn-sm btn-circle btn-ghost">✕</button>
+                        </div>
                     </div>
                     <div>
-                        <button type='button' onClick={() => openEditModal(event, 'editModal')}>Edit</button>
-                        <button type='button' onClick={handleDelete}>Delete</button>
-                    </div>
-                    <form>
-                        <label className="form-control w-full mb-3">
-                            <div className="label">
-                                <span className="label-text font-bold">Title</span>
-                            </div>
-                            <input type="text" name='title' defaultValue={event?.title} placeholder="Title" className="input input-bordered w-full rounded-none" />
-                        </label>
-                        <label className="form-control w-full mb-3">
-                            <div className="label">
-                                <span className="label-text font-bold">category</span>
-                            </div>
-                            <input type="text" name='category' defaultValue={event?.category} placeholder="category" className="input input-bordered w-full rounded-none" />
-                        </label>
-                        <label className="form-control w-full mb-3">
-                            <div className="label">
-                                <span className="label-text font-bold">Start Date & Time</span>
-                            </div>
-                            <input type="datetime-local" name='start' defaultValue={event?.start} placeholder="date" className="input input-bordered w-full rounded-none" />
-                        </label>
-                        <label className="form-control w-full mb-3">
-                            <div className="label">
-                                <span className="label-text font-bold">End Date & Time</span>
-                            </div>
-                            <input type="datetime-local" name='end' defaultValue={event?.end} placeholder="date" className="input input-bordered w-full rounded-none" />
-                        </label>
-                        <label className="form-control w-full mb-3">
-                            <div className="label">
-                                <span className="label-text font-bold">Description</span>
-                            </div>
-                            <input type="text" name='description' defaultValue={event?.description} placeholder="Description" className="input input-bordered w-full rounded-none" />
-                        </label>
-                        <label className="form-control w-full mb-3">
-                            <div className="label">
-                                <span className="label-text font-bold">Image Url</span>
-                            </div>
-                            <input type="text" name='imageUrl' defaultValue={event?.imageUrl} placeholder="Image Url" className="input input-bordered w-full rounded-none" />
-                        </label>
-                        <label className="form-control w-full mb-3">
-                            <div className="label">
-                                <span className="label-text font-bold">Location</span>
-                            </div>
-                            <textarea type="text" name='location' defaultValue={event?.location} placeholder="Image Url" className="input input-bordered w-full rounded-none" />
-                        </label>
-
-                        <div>
-                            <button type='submit' className="btn bg-accent rounded-none uppercase mt-5 text-white text-xl tracking-widest">Update</button>
+                        <div className='flex justify-center'>
+                            <img className='w-full h-40 object-cover' src={newEvent?.imageUrl} alt="" />
                         </div>
-                    </form>
+                        <h1 className='text-center text-3xl'>{newEvent?.title}</h1>
+                        <p><span className='font-bold'>Location:</span> {newEvent?.location}</p>
+                        <p><span className='font-bold'>Category:</span> {newEvent?.category}</p>
+                        <p><span className='font-bold'>Start:</span> {new Date(newEvent?.start).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} {new Date(newEvent?.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</p>
+                        <p><span className='font-bold'>End:</span> {new Date(newEvent?.end).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} {new Date(newEvent?.end).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</p>
+                        <p><span className='font-bold'>Description:</span> {newEvent?.description}</p>
+                    </div>
                 </div>
             </dialog>
         </div>

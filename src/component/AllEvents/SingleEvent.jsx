@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { deleteEvent } from '../../indexedDB';
 
-const SingleEvents = ({ propEvent, setEvents, allEvents, openEditModal }) => {
+const SingleEvents = ({ propEvent, setEvents, allEvents, openEditModal, openViewModal }) => {
     const handleDelete = () => {
         Swal.fire({
             title: "Are you sure?",
@@ -47,14 +47,14 @@ const SingleEvents = ({ propEvent, setEvents, allEvents, openEditModal }) => {
                     </div>
                 </div>
             </td>
-            <td>{propEvent?.name}</td>
+            <td>{propEvent?.title}</td>
             <td>{propEvent?.category}</td>
-            <th>{propEvent?.date}</th>
+            
+            <th>{new Date(propEvent?.start).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} {new Date(propEvent?.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</th>
             <td>
-                <button onClick={handleDelete} className="btn btn-sm btn-error rounded-none  text-white mr-2">Delete</button>
-                {/* <Link to={`/edit-event/${propEvent.id}`} className="btn btn-sm px-5 rounded-none bg-accent text-white mr-2">Edit</Link> */}
-                <button type='button' onClick={() => openEditModal(propEvent, 'editModal')} className="btn btn-sm px-5 rounded-none bg-accent text-white mr-2">Edit</button>
-                <button type='button' onClick={() => openEditModal(propEvent, 'viewModal')} className="btn btn-sm px-5 rounded-none bg-accent text-white mr-2">View</button>
+                <button onClick={handleDelete} className="btn btn-sm bg-red-400 hover:bg-red-500 text-white">Delete</button>
+                <button type='button' onClick={() => openEditModal(propEvent, 'editModal')} className="btn btn-sm bg-green-400 hover:bg-green-500 text-white">Edit</button>
+                <button type='button' onClick={() => openViewModal(propEvent, 'viewModal')} className="btn btn-sm bg-blue-400 hover:bg-blue-500 text-white">View</button>
             </td>
         </tr>
 

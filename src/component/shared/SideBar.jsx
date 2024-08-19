@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const SideBar = ({ isOpenSidebar, toggleSidebar }) => {
     return (
@@ -13,8 +13,8 @@ const SideBar = ({ isOpenSidebar, toggleSidebar }) => {
                             <Link to={'/'} className="btn btn-ghost text-xl pl-0">Celebrio</Link>
                         </div>
                     </li>
-                    <li><Link onClick={toggleSidebar} to={'/'}>Dashboard</Link></li>
-                    <li><Link onClick={toggleSidebar} to={'/all-events'}>Events</Link></li>
+                    <li><NavLink onClick={toggleSidebar} to={'/'}>Calendar</NavLink></li>
+                    <li><NavLink onClick={toggleSidebar} to={'/events'}>Events</NavLink></li>
                     {/* <li><Link onClick={toggleSidebar} to={'/dashboard/add-Events'}>Add Product</Link></li> */}
                 </ul>
 

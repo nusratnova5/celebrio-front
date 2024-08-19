@@ -28,6 +28,7 @@ const Dashboard = () => {
     const [showEditModal, setEditShowModal] = useState(false);
     const [showViewModal, setShowViewModal] = useState(false);
     const [modalId, setModalId] = useState('');
+    const [category, setCategory] = useState('');
 
     useEffect(() => {
         if (showEditModal) {
@@ -40,11 +41,15 @@ const Dashboard = () => {
 
     useEffect(() => {
         fetchEvents();
-    }, []);
+    }, [category]);
 
     const fetchEvents = async () => {
         try {
-            const response = await getAllEvents();
+            let query = {};
+            if (category) {
+                query.category = category;
+            }
+            const response = await getAllEvents(query);
             console.log('Fetched events:', response);
 
             // Assuming response is an array of events
@@ -98,6 +103,13 @@ const Dashboard = () => {
 
     return (
         <div>
+                            <div className='flex justify-end mb-3'>
+                    <select onChange={(e) => setCategory(e.target.value)} className="select select-bordered w-full max-w-xs">
+                        <option value=''>Select Category</option>
+                        <option>Personal</option>
+                        <option>Work</option>
+                    </select>
+                </div>
             <Calendar
                 localizer={localizer}
                 events={events}
